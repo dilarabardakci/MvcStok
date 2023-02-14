@@ -1,0 +1,52 @@
+﻿@using MvcStok.Models.Entity
+@using PagedList;
+@using PagedList.Mvc;
+@*@model PagedList.IPagedList<TBLURUNLER>
+@model List<TBLURUNLER>*@
+@model dynamic 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        @*KonuBaşlıgınınEtiketi*@
+        <tr>
+            <th>Ürün ID</th>
+            <th>Ürün Adi</th>
+            <th>Markasi</th>
+            <th>Kategori</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urn in Model)
+        {
+                <tr>
+                    <th>@urn.URUNID</th>
+                    <td>@urn.URUNAD</td>
+                    <td>@urn.MARKA</td>
+                    <td>@urn.TBLKATEGORILER.KATEGORIAD</td>
+                    <td>@urn.FIYAT</td>
+                    <td>@urn.STOK</td>
+                    <td><a href="/URUN/SIL/@urn.URUNID" class="btn btn-danger">SİL</a></td>
+                    <td><a href="/URUN/UrunGetir/@urn.URUNID" class="btn btn-success">GUNCELLE</a></td>
+                    <td>@Html.ActionLink("SİL BUTONU","SIL",new { id=urn.URUNID},new { @class="btn btn-warning", onclick= "return confirm('Silmek İstediğinden Emin Misin?')"})</td>
+                </tr>
+        }
+    </tbody>
+</table>
+@*@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index" ,new { sayfa}))*@
+<a href="/URUN/UrunEkle/"class="btn btn-primary">Yeni Ürün Ekle</a>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-html5-1.5.6/fh-3.1.4/datatables.min.js%22%3E%3C/script%3E"></script>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+
+<script>
+    $('tbl1').DataTable();
+</script>
+
